@@ -1,6 +1,6 @@
 # Short documentation about the project's structure.
 
-* ## All posts page
+## All posts page
 
 Contains searchbar that redirects user to search posts screen and posts with infinity scroll.
 
@@ -19,7 +19,7 @@ fetch('https://dummyjson.com/users/1')
     .then(console.log);
 ```
 
-* ## Search posts page
+## Search posts page
 
 Contains a searchbar similar to all posts page and posts with infinity scrollbar
 
@@ -38,7 +38,7 @@ fetch('https://dummyjson.com/users/1')
     .then(console.log);
 ```
 
-* ## Login page
+## Login page
 
 Contains form to log in and get a token
 
@@ -60,7 +60,7 @@ fetch('https://dummyjson.com/auth/login', {
     .then(console.log);
 ```
 
-* ## Post page
+## Post page
 
 Contains information about a single post, its user and comments
 
@@ -85,7 +85,7 @@ fetch('https://dummyjson.com/comments/post/5')
     .then(console.log);
 ```
 
-* ## User page
+## User page
 
 Contains information about a single user, such as first name, last name
 maiden name, age, gender, email, username.
