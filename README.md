@@ -1,27 +1,108 @@
-# React + TypeScript + Vite
+# Short documentation about the project's structure.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+* ## All posts page
 
-Currently, two official plugins are available:
+Contains searchbar that redirects user to search posts screen and posts with infinity scroll.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Requests:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
+* Get all posts with limit and skip
 ```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+fetch('https://dummyjson.com/posts?limit=10&skip=10&select=title,reactions,userId')
+    .then(res => res.json())
+    .then(console.log);
+```
+* Get a post writer information
+```js
+fetch('https://dummyjson.com/users/1')
+    .then(res => res.json())
+    .then(console.log);
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+* ## Search posts page
+
+Contains a searchbar similar to all posts page and posts with infinity scrollbar
+
+### Requests:
+
+* Search posts
+```js
+fetch('https://dummyjson.com/posts/search?q=love')
+  .then(res => res.json())
+  .then(console.log);
+```
+* Get a post writer information
+```js
+fetch('https://dummyjson.com/users/1')
+    .then(res => res.json())
+    .then(console.log);
+```
+
+* ## Login page
+
+Contains form to log in and get a token
+
+### Requests:
+
+* Login
+```js
+fetch('https://dummyjson.com/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    
+    username: 'kminchelle',
+    password: '0lelplR',
+    // expiresInMins: 60, // optional
+  })
+})
+    .then(res => res.json())
+    .then(console.log);
+```
+
+* ## Post page
+
+Contains information about a single post, its user and comments
+
+### Requests:
+
+* Get a single post
+```js
+fetch('https://dummyjson.com/posts/1')
+    .then(res => res.json())
+    .then(console.log);
+```
+* Get the post writer information
+```js
+fetch('https://dummyjson.com/users/1')
+    .then(res => res.json())
+    .then(console.log);
+```
+* Get all comments by post id
+```js
+fetch('https://dummyjson.com/comments/post/5')
+    .then(res => res.json())
+    .then(console.log);
+```
+
+* ## User page
+
+Contains information about a single user, such as first name, last name
+maiden name, age, gender, email, username.
+
+Also, the page contains user posts with infinity scroll
+
+### Requests:
+
+* Get a single user
+```js
+fetch('https://dummyjson.com/users/1')
+    .then(res => res.json())
+    .then(console.log);
+```
+* Get posts by user id
+```js
+fetch('https://dummyjson.com/posts/user/5')
+    .then(res => res.json())
+    .then(console.log);
+```
