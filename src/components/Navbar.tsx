@@ -1,6 +1,7 @@
 import {Box, Button, Flex, Link as ChakraLink, Stack} from "@chakra-ui/react";
 import {JSX, useState} from "react";
 
+// @ts-ignore
 import Logo from "../assets/icons/crown.svg";
 import {Link} from "react-router-dom";
 
