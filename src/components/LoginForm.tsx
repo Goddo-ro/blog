@@ -24,41 +24,49 @@ export default function LoginForm() {
 
     return (
         <Box
-            maxW={600}
-            mx="auto"
-            p={8}
-            borderWidth={1}
-            borderRadius={8}
-            boxShadow="md"
+            width="100%"
+            flex="1"
             display="flex"
-            flexDirection="column"
-            gap={4}
+            alignItems="center"
+            justifyContent="center"
         >
-            <FormControl isRequired={true} isInvalid={isUsernameError}>
-                <FormLabel>Username</FormLabel>
-                <Input type="text" value={username}
-                       onChange={handleUsernameChange} />
-                {
-                    isUsernameError &&
-                  <FormErrorMessage>Username is required.</FormErrorMessage>
-                }
-            </FormControl>
+            <Box
+                width="100%"
+                maxW={600}
+                p={8}
+                borderWidth={1}
+                borderRadius={8}
+                boxShadow="md"
+                display="flex"
+                flexDirection="column"
+                gap={4}
+            >
+                <FormControl isRequired={true} isInvalid={isUsernameError}>
+                    <FormLabel>Username</FormLabel>
+                    <Input type="text" value={username}
+                           onChange={handleUsernameChange} />
+                    {
+                        isUsernameError &&
+                      <FormErrorMessage>Username is required.</FormErrorMessage>
+                    }
+                </FormControl>
 
-            <FormControl isRequired={true} isInvalid={isPasswordError}>
-                <FormLabel>Password</FormLabel>
-                <Input type="password" value={password}
-                       onChange={handlePasswordChange} />
-                {
-                    isPasswordError &&
-                    <FormErrorMessage>Password is required.</FormErrorMessage>
-                }
-            </FormControl>
-            <Button
-                ml={"auto"}
-                px={8}
-                onClick={handleLogin}
-            >Login</Button>
+                <FormControl isRequired={true} isInvalid={isPasswordError}>
+                    <FormLabel>Password</FormLabel>
+                    <Input type="password" value={password}
+                           onChange={handlePasswordChange} />
+                    {
+                        isPasswordError &&
+                      <FormErrorMessage>Password is required.</FormErrorMessage>
+                    }
+                </FormControl>
+                <Button
+                    colorScheme='teal'
+                    ml={"auto"}
+                    px={8}
+                    onClick={handleLogin}
+                >Login</Button>
+            </Box>
         </Box>
-
     )
 }
