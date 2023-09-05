@@ -1,5 +1,5 @@
 import AppRouter from "./components/AppRouter.tsx";
-import Navbar from "./components/Navbar.tsx";
+import Navbar from "./components/UI/Navbar.tsx";
 import {Box, ChakraProvider} from "@chakra-ui/react";
 import Container from "./components/Container.tsx";
 

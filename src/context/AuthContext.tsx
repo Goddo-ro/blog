@@ -1,13 +1,15 @@
 import {createContext, ReactNode, useContext, useState} from "react";
+import {User} from "../types/User.tsx";
 
 type AuthProviderProps = {
     children: ReactNode
 }
 
 type AuthContext = {
-    id: number | null
-    token: string | null
-    login: (id: number, token: string) => void
+    id: number | undefined
+    token: string | undefined
+    image: string | undefined
+    login: (user: User) => void
     logout: () => void
 }
 
@@ -18,23 +20,26 @@ export function useAuthContext() {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [id, setId] = useState<number | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    const [id, setId] = useState<number | undefined>(undefined);
+    const [token, setToken] = useState<string | undefined>(undefined);
+    const [image, setImage] = useState<string | undefined>(undefined);
 
-    function login(id: number, token: string) {
-        setId(id);
-        setToken(token);
+    function login(user: User) {
+        setId(user.id);
+        user.token && setToken(user.token);
+        setImage(user.image);
     }
 
     function logout() {
-        setId(null);
-        setToken(null);
+        setId(undefined);
+        setToken(undefined);
     }
 
     return (
         <AuthContext.Provider value={{
             id,
             token,
+            image,
             login,
             logout,
         }}>
