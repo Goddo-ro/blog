@@ -16,7 +16,7 @@ const routes: RouteType[] = [
     {path: "/search", element: <SearchPosts/>},
     {path: "/login", element: <Login/>},
     {path: "/posts/:id", element: <Post/>},
-    {path: "/user", element: <User/>},
+    {path: "/user/:id", element: <User/>},
 ]
 
 export default function AppRouter() {
