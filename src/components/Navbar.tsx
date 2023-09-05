@@ -89,7 +89,6 @@ const MenuLinks = ({ isOpen }: {isOpen: boolean}) => {
                 <MenuItem to="/login">
                     <Button
                         size="md"
-                        pb={1}
                         fontSize={20}
                         rounded="md"
                         color={"#fff"}
