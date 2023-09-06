@@ -7,4 +7,8 @@ export default class UserService {
             password: password,
         });
     }
+
+    static async getUserById(id: number) {
+        return await $api.get(`/users/${id}`);
+    }
 }

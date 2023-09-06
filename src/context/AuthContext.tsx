@@ -21,7 +21,7 @@ export function useAuthContext() {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [id, setId] = useLocalStorage("id", null);
+    const [id, setId] = useLocalStorage("id", undefined);
     const [token, setToken] = useState<string | undefined>(undefined);
     const [image, setImage] = useState<string | undefined>(undefined);
 
