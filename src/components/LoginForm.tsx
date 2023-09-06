@@ -83,12 +83,10 @@ export default function LoginForm({callback, isLoading, error, setError}: LoginF
                     ml={"auto"}
                     px={8}
                     onClick={handleLogin}
+                    isLoading={isLoading}
+                    spinner={<Spinner />}
                 >
-                    {
-                        isLoading
-                            ? <Spinner/>
-                            : "Login"
-                    }
+                    Login
                 </Button>
             </Box>
         </Box>

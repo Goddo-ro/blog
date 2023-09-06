@@ -1,4 +1,4 @@
-import {Box, Button, Flex, Image, Link as ChakraLink, Spinner, Stack} from "@chakra-ui/react";
+import {Box, Button, Flex, Image, Link as ChakraLink, Stack} from "@chakra-ui/react";
 import {JSX, useState} from "react";
 
 // @ts-ignore
@@ -76,7 +76,7 @@ const MenuItem = ({children, to = "/"}: MenuItemProps) => {
 const User = () => {
     const [isShowExit, setShowExit] = useState(false);
 
-    const {id, image, isUserLoading} = useAuthContext();
+    const {id, image, isUserLoading, logout} = useAuthContext();
 
     return (
         <>
@@ -106,6 +106,7 @@ const User = () => {
                             />
                         </Link>
                         <Button
+                            onClick={() => logout()}
                             opacity={isShowExit ? 1 : 0}
                             colorScheme={"red"}
                             variant={"outline"}
