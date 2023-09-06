@@ -73,11 +73,71 @@ const MenuItem = ({children, to = "/"}: MenuItemProps) => {
     );
 };
 
-const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
+const User = () => {
     const [isShowExit, setShowExit] = useState(false);
 
     const {id, image, isUserLoading} = useAuthContext();
 
+    return (
+        <>
+        {
+            id
+            ?
+            <Box
+                display={"flex"}
+                alignItems={"center"}
+                marginLeft={10}
+                onMouseEnter={() => setShowExit(true)}
+                onMouseLeave={() => setShowExit(false)}
+            >
+                { !isUserLoading ?
+                    <>
+                        <Link to={`user/${id}`}>
+                            <Image
+                                border={"1px solid gray"}
+                                src={image}
+                                width={42}
+                                height={42}
+                                borderRadius="50%"
+                                marginRight={2}
+                                transform={isShowExit ? "translateX(0)" : "translateX(40px)"}
+                                transition="all 1s"
+                                zIndex={2}
+                            />
+                        </Link>
+                        <Button
+                            opacity={isShowExit ? 1 : 0}
+                            colorScheme={"red"}
+                            variant={"outline"}
+                            transition={"opacity 1s"}
+                        >
+                            Leave
+                        </Button>
+                    </>
+                    : <Skeleton circle={true} width="40px" height="40px"/>
+                }
+            </Box>
+            :
+            <MenuItem to="/login">
+                <Button
+                    size="md"
+                    fontSize={20}
+                    rounded="md"
+                    color={"#fff"}
+                    bg={"#008181"}
+                    _hover={{
+                        bg: ["#033636"]
+                    }}
+                >
+                    Sign In
+                </Button>
+            </MenuItem>
+}
+        </>
+    )
+}
+
+const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
     return (
         <Box
             display={{base: isOpen ? "block" : "none", md: "block"}}
@@ -92,59 +152,7 @@ const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
             >
                 <MenuItem to="/">Posts</MenuItem>
                 <MenuItem to="/search">Search</MenuItem>
-                {
-                    id
-                    ?
-                        <Box
-                            display={"flex"}
-                            alignItems={"center"}
-                            marginLeft={10}
-                            onMouseEnter={() => setShowExit(true)}
-                            onMouseLeave={() => setShowExit(false)}
-                        >
-                            { !isUserLoading ?
-                                <>
-                                    <Link to={`user/${id}`}>
-                                        <Image
-                                            border={"1px solid gray"}
-                                            src={image}
-                                            width={42}
-                                            height={42}
-                                            borderRadius="50%"
-                                            marginRight={2}
-                                            transform={isShowExit ? "translateX(0)" : "translateX(40px)"}
-                                            transition="all 1s"
-                                            zIndex={2}
-                                        />
-                                    </Link>
-                                    <Button
-                                        opacity={isShowExit ? 1 : 0}
-                                        colorScheme={"red"}
-                                        variant={"outline"}
-                                        transition={"opacity 1s"}
-                                    >
-                                        Leave
-                                    </Button>
-                                </>
-                                : <Skeleton circle={true} width="40px" height="40px"/>
-                            }
-                        </Box>
-                    :
-                        <MenuItem to="/login">
-                            <Button
-                                size="md"
-                                fontSize={20}
-                                rounded="md"
-                                color={"#fff"}
-                                bg={"#008181"}
-                                _hover={{
-                                    bg: ["#033636"]
-                                }}
-                            >
-                                Sign In
-                            </Button>
-                        </MenuItem>
-                }
+                <User/>
             </Stack>
         </Box>
     );
