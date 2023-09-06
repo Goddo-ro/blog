@@ -1,13 +1,25 @@
 import LoginForm from "../components/LoginForm.tsx";
 import {useFetching} from "../hooks/useFetching.tsx";
 import UserService from "../services/UserService.tsx";
+import {useAuthContext} from "../context/AuthContext.tsx";
+import {redirect} from "react-router-dom";
 export default function Login() {
-    const [login, isLoading, error, setError] = useFetching(async (username: string, password: string) => {
+    const {id, login} = useAuthContext();
+
+    if (id) return redirect("/");
+
+    const [loginFetch, isLoading, error, setError] = useFetching(async (username: string, password: string) => {
         const response = await UserService.login(username, password);
-        console.log(response)
+        if (!error)
+            login({
+                id: response.data.id,
+                token: response.data.token,
+                image: response.data.image,
+                username: response.data.username,
+            })
     })
 
     return (
-        <LoginForm callback={login} isLoading={isLoading} error={error} setError={setError} />
+        <LoginForm callback={loginFetch} isLoading={isLoading} error={error} setError={setError} />
     )
 }

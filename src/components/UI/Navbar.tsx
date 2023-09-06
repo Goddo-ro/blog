@@ -103,6 +103,7 @@ const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
                     >
                         <Link to={`user/${id}`}>
                             <Image
+                                border={"1px solid gray"}
                                 src={image}
                                 width={42}
                                 height={42}
