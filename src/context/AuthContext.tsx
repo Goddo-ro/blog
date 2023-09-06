@@ -1,5 +1,6 @@
 import {createContext, ReactNode, useContext, useState} from "react";
 import {User} from "../types/User.tsx";
+import {useLocalStorage} from "../hooks/useLocalStorage.tsx";
 
 type AuthProviderProps = {
     children: ReactNode
@@ -20,7 +21,7 @@ export function useAuthContext() {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [id, setId] = useState<number | undefined>(undefined);
+    const [id, setId] = useLocalStorage("id", null);
     const [token, setToken] = useState<string | undefined>(undefined);
     const [image, setImage] = useState<string | undefined>(undefined);
 
