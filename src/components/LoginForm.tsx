@@ -1,7 +1,15 @@
-import {Box, Button, FormControl, FormErrorMessage, FormLabel, Input} from "@chakra-ui/react";
+import {Box, Button, FormControl, FormErrorMessage, FormLabel, Input, Spinner} from "@chakra-ui/react";
 import {ChangeEvent, useState} from "react";
+import * as React from "react";
 
-export default function LoginForm() {
+type LoginFormProps = {
+    callback: ((username: string, password: string) => void)
+    isLoading: boolean
+    error: string
+    setError: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function LoginForm({callback, isLoading, error, setError}: LoginFormProps) {
     const [username, setUsername] = useState("");
     const [isUsernameError, setUsernameError] = useState(false);
     const [password, setPassword] = useState("");
@@ -9,17 +17,20 @@ export default function LoginForm() {
 
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
         username && setUsernameError(false);
-        setUsername(e.target.value)
+        error && setError("");
+        setUsername(e.target.value);
     }
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
         password && setPasswordError(false);
+        error && setError("");
         setPassword(e.target.value);
     }
 
     const handleLogin = () => {
         !username && setUsernameError(true);
         !password && setPasswordError(true);
+        callback(username, password);
     }
 
     return (
@@ -60,12 +71,25 @@ export default function LoginForm() {
                       <FormErrorMessage>Password is required.</FormErrorMessage>
                     }
                 </FormControl>
+                <FormControl isInvalid={!!error}>
+                    {
+                        error &&
+                      <FormErrorMessage>{error}</FormErrorMessage>
+                    }
+                </FormControl>
+
                 <Button
                     colorScheme='teal'
                     ml={"auto"}
                     px={8}
                     onClick={handleLogin}
-                >Login</Button>
+                >
+                    {
+                        isLoading
+                            ? <Spinner/>
+                            : "Login"
+                    }
+                </Button>
             </Box>
         </Box>
     )
