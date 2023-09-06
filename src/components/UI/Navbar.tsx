@@ -1,10 +1,11 @@
-import {Box, Button, Flex, Image, Link as ChakraLink, Stack} from "@chakra-ui/react";
+import {Box, Button, Flex, Image, Link as ChakraLink, Spinner, Stack} from "@chakra-ui/react";
 import {JSX, useState} from "react";
 
 // @ts-ignore
 import Logo from "../../assets/icons/crown.svg";
 import {Link} from "react-router-dom";
 import {useAuthContext} from "../../context/AuthContext.tsx";
+import Skeleton from "react-loading-skeleton";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ export default function Navbar() {
                 maxW={1200}
                 color={"#000"}
             >
-                <img src={Logo}/>
+                <img src={Logo} alt={"User"}/>
                 <Box display={{base: "block", md: "none"}} onClick={toggle}>
                     {isOpen ? <CloseIcon/> : <MenuIcon/>}
                 </Box>
@@ -75,7 +76,7 @@ const MenuItem = ({children, to = "/"}: MenuItemProps) => {
 const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
     const [isShowExit, setShowExit] = useState(false);
 
-    const {id, image} = useAuthContext();
+    const {id, image, isUserLoading} = useAuthContext();
 
     return (
         <Box
@@ -94,50 +95,55 @@ const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
                 {
                     id
                     ?
-                    <Box
-                        display={"flex"}
-                        alignItems={"center"}
-                        marginLeft={10}
-                        onMouseEnter={() => setShowExit(true)}
-                        onMouseLeave={() => setShowExit(false)}
-                    >
-                        <Link to={`user/${id}`}>
-                            <Image
-                                border={"1px solid gray"}
-                                src={image}
-                                width={42}
-                                height={42}
-                                borderRadius="50%"
-                                marginRight={2}
-                                transform={isShowExit ? "translateX(0)" : "translateX(40px)"}
-                                transition="all 1s"
-                                zIndex={2}
-                            />
-                        </Link>
-                        <Button
-                            opacity={isShowExit ? 1 : 0}
-                            colorScheme={"red"}
-                            variant={"outline"}
-                            transition={"opacity 1s"}
+                        <Box
+                            display={"flex"}
+                            alignItems={"center"}
+                            marginLeft={10}
+                            onMouseEnter={() => setShowExit(true)}
+                            onMouseLeave={() => setShowExit(false)}
                         >
-                            Leave
-                        </Button>
-                    </Box>
+                            { !isUserLoading ?
+                                <>
+                                    <Link to={`user/${id}`}>
+                                        <Image
+                                            border={"1px solid gray"}
+                                            src={image}
+                                            width={42}
+                                            height={42}
+                                            borderRadius="50%"
+                                            marginRight={2}
+                                            transform={isShowExit ? "translateX(0)" : "translateX(40px)"}
+                                            transition="all 1s"
+                                            zIndex={2}
+                                        />
+                                    </Link>
+                                    <Button
+                                        opacity={isShowExit ? 1 : 0}
+                                        colorScheme={"red"}
+                                        variant={"outline"}
+                                        transition={"opacity 1s"}
+                                    >
+                                        Leave
+                                    </Button>
+                                </>
+                                : <Skeleton circle={true} width="40px" height="40px"/>
+                            }
+                        </Box>
                     :
-                    <MenuItem to="/login">
-                        <Button
-                            size="md"
-                            fontSize={20}
-                            rounded="md"
-                            color={"#fff"}
-                            bg={"#008181"}
-                            _hover={{
-                                bg: ["#033636"]
-                            }}
-                        >
-                            Sign In
-                        </Button>
-                    </MenuItem>
+                        <MenuItem to="/login">
+                            <Button
+                                size="md"
+                                fontSize={20}
+                                rounded="md"
+                                color={"#fff"}
+                                bg={"#008181"}
+                                _hover={{
+                                    bg: ["#033636"]
+                                }}
+                            >
+                                Sign In
+                            </Button>
+                        </MenuItem>
                 }
             </Stack>
         </Box>
