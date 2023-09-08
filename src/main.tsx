@@ -8,7 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
       <AuthProvider>
-          <SkeletonTheme baseColor={"#313131"} highlightColor={"#525252"}>
+          <SkeletonTheme baseColor={"#7c7c7c"} highlightColor={"#c7c7c7"}>
               <App />
           </SkeletonTheme>
       </AuthProvider>

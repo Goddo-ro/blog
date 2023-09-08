@@ -1,5 +1,8 @@
+import {Box} from "@chakra-ui/react";
+
 export default function Posts() {
     return (
-        <h1>Posts</h1>
+        <Box>
+        </Box>
     )
 }

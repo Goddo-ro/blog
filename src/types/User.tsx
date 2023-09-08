@@ -1,6 +1,8 @@
 export type User = {
     id: number
-    token?: string
     image: string
     username: string
+    token?: string
+    firstName?: string
+    lastName?: string
 }
