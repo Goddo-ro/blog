@@ -40,7 +40,7 @@ export default function Posts() {
         >
             {
                 !error &&!posts.length && areLoading &&
-                <PostItemSkeleton count={5}/>
+                <SkeletonList count={5} />
             }
             {
                 posts.map(item => <PostItem key={item.id} post={item}/>)
@@ -60,5 +60,17 @@ export default function Posts() {
                 <InfinityScrollView onChange={handleInView} fetch={fetchPosts} isLoading={areLoading}/>
             }
         </Box>
+    )
+}
+
+function SkeletonList({count}: {count: number}) {
+    return (
+        <>
+            {
+            Array(count).fill(0).map((_, i) =>
+                <PostItemSkeleton key={i} />
+            )
+            }
+        </>
     )
 }
