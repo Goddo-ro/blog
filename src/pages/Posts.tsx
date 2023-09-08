@@ -5,6 +5,7 @@ import {useFetching} from "../hooks/useFetching.tsx";
 import PostService from "../services/PostService.tsx";
 import PostItem from "../components/PostItem.tsx";
 import InfinityScrollView from "../components/InfinityScrollView.tsx";
+import PostItemSkeleton from "../components/PostItemSkeleton.tsx";
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -14,7 +15,7 @@ export default function Posts() {
     const limit = 10;
     const skipPlus = 10;
 
-    const [fetchPosts, areLoading] = useFetching(async () => {
+    const [fetchPosts, areLoading, error] = useFetching(async () => {
         const response = await PostService.getPosts(limit, skip);
         if (response.data.total <= skip)
             setEnd(true);
@@ -37,6 +38,10 @@ export default function Posts() {
             flexDirection={"column"}
             gap={"2rem"}
         >
+            {
+                !error &&!posts.length && areLoading &&
+                <PostItemSkeleton count={5}/>
+            }
             {
                 posts.map(item => <PostItem key={item.id} post={item}/>)
             }

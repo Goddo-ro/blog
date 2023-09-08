@@ -85,7 +85,7 @@ function UserContainer({userId}: {userId: number}) {
     )
 }
 
-function UserSkeleton() {
+export function UserSkeleton() {
     return (
         <>
             <Skeleton circle width={"40px"} height={"40px"} />
