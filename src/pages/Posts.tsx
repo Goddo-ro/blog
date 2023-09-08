@@ -1,11 +1,10 @@
-import {Box, Button, Heading, Spinner} from "@chakra-ui/react";
-import {InView} from "react-intersection-observer";
+import {Box, Heading} from "@chakra-ui/react";
 import {useState} from "react";
 import {Post} from "../types/Post.tsx";
 import {useFetching} from "../hooks/useFetching.tsx";
 import PostService from "../services/PostService.tsx";
 import PostItem from "../components/PostItem.tsx";
-import * as React from "react";
+import InfinityScrollView from "../components/InfinityScrollView.tsx";
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -25,6 +24,11 @@ export default function Posts() {
     const fetchNewPosts = () => {
         fetchPosts();
         setSkip(prev => prev + skipPlus);
+    }
+
+    const handleInView = (inView: boolean) => {
+        if (!inView || areLoading) return;
+        fetchNewPosts();
     }
 
     return (
@@ -48,27 +52,7 @@ export default function Posts() {
                     Posts are over...
                 </Heading>
                     :
-                <InView as="div" onChange={(inView) => {
-                    if (!inView || areLoading) return;
-                    fetchNewPosts();
-                }}
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                        }}
-                >
-                    <Button
-                        onClick={fetchNewPosts}
-                        isLoading={areLoading}
-                        loadingText={"Loading"}
-                        spinnerPlacement={"end"}
-                        colorScheme={"gray"}
-                        marginInline={"auto"}
-                        size={"lg"}
-                    >
-                        Load more
-                    </Button>
-                </InView>
+                <InfinityScrollView onChange={handleInView} fetch={fetchPosts} isLoading={areLoading}/>
             }
         </Box>
     )
