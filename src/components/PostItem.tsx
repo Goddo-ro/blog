@@ -29,7 +29,9 @@ export default function PostItem({post}: {post: Post | undefined}) {
                 <Heading as={"h3"} size={"md"}>
                     {post.title}
                 </Heading>
-                <Text>{post.body}</Text>
+                <Text
+                    noOfLines={3}
+                >{post.body}</Text>
                 <List
                     display={"flex"}
                     gap={"4px"}
