@@ -11,7 +11,7 @@ export default function UserInfo({user}: {user: User | undefined}) {
         >
             <Image src={user.image}
                    width={"30%"}
-                   maxWidth={"300px"}
+                   maxWidth={"100px"}
                    borderRadius={"50%"}
                    border={"1px solid #b9b9b9"}
             />

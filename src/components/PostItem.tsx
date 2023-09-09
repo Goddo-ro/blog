@@ -22,11 +22,12 @@ export default function PostItem({post, hasUser = true}: {post: Post | undefined
             {
                 hasUser && <UserContainer userId={post.userId}/>
             }
-            <ChakraLink as={Link} to={`posts/${post.id}`}
-                        display={"flex"}
-                        flexDirection={"column"}
-                        gap={"4px"}
-                        _hover={{textDecoration: "none"}}
+            <Link replace to={`posts/${post.id}`}
+                  style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                  }}
             >
                 <Heading as={"h3"} size={"md"}>
                     {post.title}
@@ -40,7 +41,7 @@ export default function PostItem({post, hasUser = true}: {post: Post | undefined
                 >
                     {post.tags.map((tag, i) => <Tag key={i} tag={tag}/>)}
                 </List>
-            </ChakraLink>
+            </Link>
 
         </Box>
     )
@@ -77,7 +78,7 @@ export function UserContainer({userId}: {userId: number}) {
                         />
                         <UserNames>
                             <Text>{user?.firstName} {user?.lastName}</Text>
-                            <ChakraLink as={Link} to={`/user/${userId}`}
+                            <ChakraLink as={Link} replace to={`/user/${userId}`}
                                         width={"fit-content"}
                                         fontSize={"14px"}
                                         color={"#33BBC5"}
