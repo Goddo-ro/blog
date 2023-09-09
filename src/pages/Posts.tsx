@@ -1,35 +1,66 @@
 import {Box, Heading} from "@chakra-ui/react";
-import {useState} from "react";
+import React, {useState} from "react";
 import {Post} from "../types/Post.tsx";
 import {useFetching} from "../hooks/useFetching.tsx";
 import PostService from "../services/PostService.tsx";
 import PostItem from "../components/PostItem.tsx";
 import InfinityScrollView from "../components/InfinityScrollView.tsx";
 import PostItemSkeleton from "../components/PostItemSkeleton.tsx";
+import SearchContainer from "../components/SearchContainer.tsx";
+import {AxiosResponse} from "axios";
 
 export default function Posts() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [skip, setSkip] = useState(0);
     const [isEnd, setEnd] = useState(false);
+    const [search, setSearch] = useState("");
+    const [isSearch, setIsSearch] = useState(false);
 
     const limit = 10;
     const skipPlus = 10;
 
-    const [fetchPosts, areLoading, error] = useFetching(async () => {
-        const response = await PostService.getPosts(limit, skip);
+    const [fetchPosts, areLoading, error] = useFetching(async (skip: number, isSearch?: boolean) => {
+        let response: AxiosResponse;
+        if (isSearch) {
+            response = await PostService.getPostsWithSearch(limit, skip, search);
+        }
+        else {
+            response = await PostService.getPosts(limit, skip);
+        }
+
         if (response.data.total <= skip)
             setEnd(true);
+        else
+            setEnd(false);
         setPosts(prev => [...prev, ...response.data.posts]);
     })
 
-    const fetchNewPosts = () => {
-        fetchPosts();
+    const fetchNewPosts = (skip: number, isSearch?: boolean) => {
+        fetchPosts(skip, isSearch);
         setSkip(prev => prev + skipPlus);
     }
 
     const handleInView = (inView: boolean) => {
         if (!inView || areLoading) return;
-        fetchNewPosts();
+        fetchNewPosts(skip, isSearch);
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+        if (!e.target.value && isSearch) {
+            setIsSearch(false);
+            setSkip(0);
+            setPosts([]);
+            fetchNewPosts(0);
+        }
+    }
+
+    const handleSearch = () => {
+        if (!search) return;
+        setIsSearch(true);
+        setPosts([]);
+        setSkip(0);
+        fetchNewPosts(0, true);
     }
 
     return (
@@ -38,6 +69,7 @@ export default function Posts() {
             flexDirection={"column"}
             gap={"2rem"}
         >
+            <SearchContainer search={search} handleInputChange={handleInputChange} handleSearch={handleSearch} />
             {
                 !error &&!posts.length && areLoading &&
                 <SkeletonList count={5} />
@@ -54,7 +86,9 @@ export default function Posts() {
                     marginInline={"auto"}
                     color={"#b9b9b9"}
                 >
-                    Posts are over...
+                    {
+                        posts.length === 0 ? "We didn't find anything" : "Posts are over..."
+                    }
                 </Heading>
                     :
                 <InfinityScrollView onChange={handleInView} fetch={fetchPosts} isLoading={areLoading}/>

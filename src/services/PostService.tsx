@@ -5,7 +5,17 @@ export default class PostService {
         return await $api.get("/posts", {
             params: {
                 limit: limit,
-                skip: skip
+                skip: skip,
+            }
+        });
+    }
+
+    static async getPostsWithSearch(limit?: number, skip?: number, search?: string) {
+        return await $api.get("/posts/search", {
+            params: {
+                limit: limit,
+                skip: skip,
+                q: search,
             }
         });
     }
