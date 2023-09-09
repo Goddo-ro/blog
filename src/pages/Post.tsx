@@ -6,6 +6,7 @@ import PostService from "../services/PostService.tsx";
 import {Box, Heading} from "@chakra-ui/react";
 import PostItem from "../components/PostItem.tsx";
 import PostContainer from "../components/PostContainer.tsx";
+import PostContainerSkeleton from "../components/PostContainerSkeleton.tsx";
 
 export default function Post() {
     const [post, setPost] = useState<PostType>();
@@ -24,7 +25,9 @@ export default function Post() {
     return (
         <Box>
             {
-                !isLoading && <PostContainer post={post}/>
+                !isLoading
+                    ? <PostContainer post={post}/>
+                    : <PostContainerSkeleton/>
             }
         </Box>
     )
