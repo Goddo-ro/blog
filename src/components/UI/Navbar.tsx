@@ -152,7 +152,6 @@ const MenuLinks = ({isOpen}: { isOpen: boolean }) => {
                 pt={[4, 4, 0, 0]}
             >
                 <MenuItem to="/">Posts</MenuItem>
-                <MenuItem to="/search">Search</MenuItem>
                 <User/>
             </Stack>
         </Box>

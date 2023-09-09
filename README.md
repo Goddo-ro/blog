@@ -12,19 +12,6 @@ fetch('https://dummyjson.com/posts?limit=10&skip=10&select=title,reactions,userI
     .then(res => res.json())
     .then(console.log);
 ```
-* Get a post writer information
-```js
-fetch('https://dummyjson.com/users/1')
-    .then(res => res.json())
-    .then(console.log);
-```
-
-## Search posts page
-
-Contains a searchbar similar to all posts page and posts with infinity scrollbar
-
-### Requests:
-
 * Search posts
 ```js
 fetch('https://dummyjson.com/posts/search?q=love')
