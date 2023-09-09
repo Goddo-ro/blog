@@ -19,4 +19,8 @@ export default class PostService {
             }
         });
     }
+
+    static async getPostById(id: number) {
+        return await $api.get(`/posts/${id}`);
+    }
 }
