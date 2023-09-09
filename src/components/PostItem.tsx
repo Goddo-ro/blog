@@ -44,7 +44,7 @@ export default function PostItem({post}: {post: Post | undefined}) {
     )
 }
 
-function UserContainer({userId}: {userId: number}) {
+export function UserContainer({userId}: {userId: number}) {
     const [user, setUser] = useState<User | undefined>();
 
     const [fetchUser, isUserLoading] = useFetching(async (id: number) => {
@@ -113,7 +113,7 @@ function UserNames({children}: {children?: ReactNode}) {
     )
 }
 
-function Tag({tag}: {tag: string}) {
+export function Tag({tag}: {tag: string}) {
     return (
         <ListItem
             border={"1px solid #33BBC5"}
