@@ -6,6 +6,7 @@ import UserService from "../services/UserService.tsx";
 import {Box} from "@chakra-ui/react";
 import UserInfo from "../components/UserInfo.tsx";
 import UserInfoSkeleton from "../components/UserInfoSkeleton.tsx";
+import UserPosts from "../components/UserPosts.tsx";
 
 export default function User() {
     const [user, setUser] = useState<UserType>();
@@ -28,6 +29,7 @@ export default function User() {
                     ? <UserInfo user={user}/>
                     : <UserInfoSkeleton/>
             }
+            <UserPosts userId={Number(id)}/>
         </Box>
     )
 }

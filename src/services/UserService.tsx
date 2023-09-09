@@ -12,4 +12,8 @@ export default class UserService {
     static async getUserById(id: number) {
         return await $api.get<User>(`/users/${id}`);
     }
+
+    static async getUserPosts(userId: number) {
+        return await $api.get(`/users/${userId}/posts`);
+    }
 }

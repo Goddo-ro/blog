@@ -7,7 +7,7 @@ import UserService from "../services/UserService.tsx";
 import Skeleton from "react-loading-skeleton";
 import {Link} from "react-router-dom";
 
-export default function PostItem({post}: {post: Post | undefined}) {
+export default function PostItem({post, hasUser = true}: {post: Post | undefined, hasUser?: boolean}) {
     if (!post) return;
     return (
         <Box
@@ -19,7 +19,9 @@ export default function PostItem({post}: {post: Post | undefined}) {
             flexDirection={"column"}
             gap={"4px"}
         >
-            <UserContainer userId={post.userId}/>
+            {
+                hasUser && <UserContainer userId={post.userId}/>
+            }
             <ChakraLink as={Link} to={`posts/${post.id}`}
                         display={"flex"}
                         flexDirection={"column"}
