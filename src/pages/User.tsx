@@ -5,6 +5,7 @@ import {useFetching} from "../hooks/useFetching.tsx";
 import UserService from "../services/UserService.tsx";
 import {Box} from "@chakra-ui/react";
 import UserInfo from "../components/UserInfo.tsx";
+import UserInfoSkeleton from "../components/UserInfoSkeleton.tsx";
 
 export default function User() {
     const [user, setUser] = useState<UserType>();
@@ -23,7 +24,9 @@ export default function User() {
     return (
         <Box>
             {
-                !isUserLoading && <UserInfo user={user}/>
+                !isUserLoading
+                    ? <UserInfo user={user}/>
+                    : <UserInfoSkeleton/>
             }
         </Box>
     )
