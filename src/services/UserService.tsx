@@ -1,4 +1,5 @@
 import {$api} from "../api/api.ts";
+import {User} from "../types/User.tsx";
 
 export default class UserService {
     static async login(username: string, password: string) {
@@ -9,6 +10,6 @@ export default class UserService {
     }
 
     static async getUserById(id: number) {
-        return await $api.get(`/users/${id}`);
+        return await $api.get<User>(`/users/${id}`);
     }
 }
