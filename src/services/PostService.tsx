@@ -23,4 +23,8 @@ export default class PostService {
     static async getPostById(id: number) {
         return await $api.get(`/posts/${id}`);
     }
+
+    static async getPostComments(postId: number) {
+        return await $api.get(`/posts/${postId}/comments`);
+    }
 }
